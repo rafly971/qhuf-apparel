@@ -44,19 +44,24 @@ async function loadProducts() {
     }
 }
 
-// --- 3. LOGIKA TOMBOL BELI (AUTH CHECK) ---
+// --- 3. LOGIKA TOMBOL BELI ---
 function handleBuy(productName, productPrice) {
-    // Cek apakah token user tersimpan di local storage HP
+    // Sinyal tes: kalau ini muncul, berarti tombol sudah terhubung ke JS!
+    alert("Sistem mendeteksi klik pada: " + productName);
+    
     const session = localStorage.getItem('supabase_session');
     
     if (!session) {
         alert('Ups! Kamu harus Login terlebih dahulu untuk melakukan pembelian.');
-        // Munculkan form login/register (bisa diarahkan ke section auth)
-        document.getElementById('auth-section')?.scrollIntoView({ behavior: 'smooth' });
+        const authSection = document.getElementById('auth-section');
+        if (authSection) {
+            authSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            alert('Menu login belum terpasang di halaman ini.');
+        }
     } else {
-        // Jika sudah login, langsung arahkan ke WhatsApp Admin untuk transaksi
-        const nomorWA = "628xxxxxxxxxx"; // <--- GANTI dengan nomor WhatsApp tokomu nanti
-        const pesan = `Halo Admin QHUF APPAREL, saya ingin membeli:\n\nNama Produk: ${productName}\nHarga: Rp ${Number(productPrice).toLocaleString('id-ID')}\n\nMohon diproses ya!`;
+        const nomorWA = "628xxxxxxxxxx"; // <--- Pastikan ini nomor WA kamu
+        const pesan = `Halo Admin QHUF APPAREL, saya ingin membeli:\n\nNama Produk: ${productName}\nHarga: Rp ${Number(productPrice).toLocaleString('id-ID')}`;
         window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
     }
 }
