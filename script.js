@@ -15,32 +15,45 @@ async function supabaseFetch(endpoint, method = 'GET', body = null) {
     return await response.json();
 }
 
-// --- 2. MENAMPILKAN PRODUK DARI DATABASE ---
-async function loadProducts() {
-    const productGrid = document.querySelector('.product-grid');
-    if (!productGrid) return;
+// --- 2. FUNGSI TOMBOL BELI (KIRIM KE DATABASE) ---
+async function handleBuy(productName, productPrice) {
+    // Beri tahu pembeli bahwa sistem sedang memproses
+    alert("Sedang memproses pesananmu ke sistem...");
+
+    // Mintalah nama pembeli lewat pop-up box di HP
+    const namaPembeli = prompt("Masukkan nama kamu untuk konfirmasi pesanan:");
+    if (!namaPembeli) {
+        alert("Pesanan dibatalkan karena nama tidak diisi.");
+        return;
+    }
 
     try {
-        // Mengambil data dari tabel 'products' yang kamu buat tadi
-        const products = await supabaseFetch('rest/v1/products?select=*');
-        
-        // Bersihkan isi grid bawaan HTML
-        productGrid.innerHTML = '';
-
-        // Looping untuk memunculkan produk secara otomatis
-        products.forEach(product => {
-            const productCard = `
-                <div class="product-card">
-                    <img src="${product.image_url}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p class="price">Rp ${Number(product.price).toLocaleString('id-ID')}</p>
-                    <button class="btn-buy" onclick="handleBuy('${product.name}', ${product.price})">Beli Sekarang</button>
-                </div>
-            `;
-            productGrid.innerHTML += productCard;
+        // Proses mengirim data ke tabel 'orders' di Supabase
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+            method: 'POST',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({
+                product_name: productName,
+                price: productPrice,
+                buyer_name: namaPembeli
+            })
         });
+
+        if (!response.ok) {
+            throw new Error("Gagal menyimpan ke database");
+        }
+
+        // Jika berhasil
+        alert(`Terima kasih ${namaPembeli}! Pesanan untuk "${productName}" berhasil disimpan di database kami.`);
+        
     } catch (error) {
-        console.error('Gagal memuat produk:', error);
+        console.error("Error:", error);
+        alert("Waduh, koneksi gagal. Pesanan gagal tersimpan: " + error.message);
     }
 }
 
