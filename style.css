@@ -108,7 +108,7 @@ nav, .nav-links, .auth-links {
     text-align: center;
     /* GANTI LINK DI BAWAH UNTUK FOTO HEADER */
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), 
-                url('https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1200') no-repeat center center/cover;
+                url('https://jpnegsanadsfubezkhor.supabase.co/storage/v1/object/public/product-images/header.jpg') no-repeat center center/cover;
     padding-top: 80px;
 }
 .hero-content h1 { font-size: 4rem; font-weight: 800; margin-bottom: 12px; }
@@ -149,9 +149,9 @@ nav, .nav-links, .auth-links {
 }
 
 /* GANTI LINK DI BAWAH UNTUK 3 FOTO PRODUK */
-.img-prod-1 { background-image: url('https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=600'); }
-.img-prod-2 { background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=600'); }
-.img-prod-3 { background-image: url('https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=600'); }
+.img-prod-1 { background-image: url('https://jpnegsanadsfubezkhor.supabase.co/storage/v1/object/public/product-images/produk1.jpg'); }
+.img-prod-2 { background-image: url('https://jpnegsanadsfubezkhor.supabase.co/storage/v1/object/public/product-images/produk2.jpg'); }
+.img-prod-3 { background-image: url('https://jpnegsanadsfubezkhor.supabase.co/storage/v1/object/public/product-images/produk3.jpg'); }
 
 .product-info { padding: 24px; }
 .product-name { font-size: 1.1rem; margin-bottom: 8px; }
